@@ -1,0 +1,16 @@
+.card {
+  padding: 5px;
+  margin: 10px auto;
+  background-color: var(--bgPrimary);
+  font-size: 1.1rem;
+  max-width: 150px;
+  text-align: center;
+}
+
+.avatar {
+  width: 100%;
+}
+
+.card > div {
+  padding-top: 10px;
+}
