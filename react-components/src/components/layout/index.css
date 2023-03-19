@@ -1,0 +1,17 @@
+.wrapper {
+  position: relative;
+  max-width: red;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  max-width: min(100%, var(--widthLayoutLaptop));
+  margin: 0 auto;
+  padding: 0 var(--widthIndent);
+  padding-top: 20px;
+}
