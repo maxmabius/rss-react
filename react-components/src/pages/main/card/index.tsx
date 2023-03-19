@@ -1,20 +1,13 @@
 import * as React from 'react';
 
+import type { User } from '../fake-users';
+
 import './index.css';
 
-interface UserProps {
-  image: string;
-  maidenName: string;
-  firstName: string;
-  lastName: string;
-  birthDate: string;
-  department: string;
-}
-
-export default function Card({ user }: { user: UserProps }) {
+export default function Card({ user }: { user: User }) {
   return (
     <div className="card">
-      <img className="avatar" src={user.image} alt={user.maidenName} />
+      <img className="avatar" src={user.image} alt={user.lastName} />
       <div>
         {user.firstName} {user.lastName}
       </div>

@@ -1,4 +1,4 @@
-const fakeUsers = [
+export const fakeUsers = [
   {
     id: 1,
     image: 'https://robohash.org/hicveldicta.png',
@@ -241,4 +241,11 @@ const fakeUsers = [
   },
 ];
 
-export default fakeUsers;
+export interface User {
+  id: number;
+  image: string;
+  firstName: string;
+  lastName: string;
+  birthDate: string;
+  department: string;
+}

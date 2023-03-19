@@ -1,7 +1,9 @@
 .card {
   padding: 5px;
+  border-radius: 10px;
   margin: 10px auto;
   background-color: var(--bgPrimary);
+  background-color: transparent;
   font-size: 1.1rem;
   max-width: 150px;
   text-align: center;
