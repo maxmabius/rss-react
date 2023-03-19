@@ -3,37 +3,49 @@ import * as React from 'react';
 import Card from './card';
 
 import { fakeUsers } from './fake-users';
-import type { User } from './fake-users';
 
 import './index.css';
 
 interface Props {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 interface State {
   searchValue: string;
-  fakeUsers: User[];
 }
 
-export default class MainPage extends React.Component<Props, State> {
-  public state: State = {
-    searchValue: '',
-    fakeUsers,
-  };
+export default class Main extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+
+    this.state = {
+      searchValue: localStorage.getItem('searchValue') || '',
+    };
+
+    this.save = this.save.bind(this);
+
+    window.onbeforeunload = this.save;
+  }
+
+  componentWillUnmount() {
+    this.save();
+  }
+
+  save() {
+    localStorage.setItem('searchValue', this.state.searchValue);
+  }
 
   changeSearchValue = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const filteredFakeUsers = fakeUsers.filter((user) =>
-      user.firstName.toLocaleLowerCase().includes(event.target.value.toLowerCase())
-    );
-
     this.setState({
       searchValue: event.target.value,
-      fakeUsers: filteredFakeUsers,
     });
   };
 
   render() {
+    const filteredFakeUsers = fakeUsers.filter((user) =>
+      user.firstName.toLocaleLowerCase().includes(this.state.searchValue.toLowerCase())
+    );
+
     return (
       <div className="main-page">
         <input
@@ -44,7 +56,7 @@ export default class MainPage extends React.Component<Props, State> {
           value={this.state.searchValue}
         />
         <div className="list">
-          {this.state.fakeUsers.map((user) => (
+          {filteredFakeUsers.map((user) => (
             <Card key={user.id} user={user} />
           ))}
         </div>
