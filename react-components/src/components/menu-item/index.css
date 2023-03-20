@@ -1,0 +1,11 @@
+.item {
+  color: var(--colorPrimaryDark);
+}
+
+.item:not(:first-child) {
+  margin-left: 50px;
+}
+
+.active {
+  color: var(--bgSecondaryLight);
+}
