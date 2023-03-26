@@ -2,7 +2,7 @@ import React from 'react';
 import { screen, render } from '@testing-library/react';
 import { describe, expect, test } from 'vitest';
 
-import Card from './card';
+import Card from '../../components/card';
 
 describe('testing cards', () => {
   test('test card 1', () => {

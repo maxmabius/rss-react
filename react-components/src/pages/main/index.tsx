@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import Card from './card';
+import Card from '../../components/card';
 
 import { fakeUsers } from './fake-users';
 

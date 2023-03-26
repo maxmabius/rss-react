@@ -6,6 +6,7 @@ export const fakeUsers = [
     lastName: 'Medhurst',
     birthDate: '2000-12-25',
     department: 'Marketing',
+    gender: 'male',
   },
   {
     id: 2,
@@ -14,6 +15,7 @@ export const fakeUsers = [
     lastName: 'Quigley',
     birthDate: '2003-08-02',
     department: 'Services',
+    gender: 'female',
   },
   {
     id: 3,
@@ -22,6 +24,7 @@ export const fakeUsers = [
     lastName: 'Hills',
     birthDate: '1992-12-30',
     department: 'Marketing',
+    gender: 'male',
   },
   {
     id: 4,
@@ -30,6 +33,7 @@ export const fakeUsers = [
     lastName: 'Cummerata',
     birthDate: '1969-01-16',
     department: 'Business Development',
+    gender: 'female',
   },
   {
     id: 5,
@@ -38,6 +42,7 @@ export const fakeUsers = [
     lastName: 'Schultz',
     birthDate: '1968-11-03',
     department: 'Support',
+    gender: 'female',
   },
   {
     id: 6,
@@ -46,6 +51,7 @@ export const fakeUsers = [
     lastName: 'Reichert',
     birthDate: '1969-07-21',
     department: 'Accounting',
+    gender: 'male',
   },
   {
     id: 7,
@@ -54,6 +60,7 @@ export const fakeUsers = [
     lastName: 'Abbott',
     birthDate: '1982-02-21',
     department: 'Product Management',
+    gender: 'male',
   },
   {
     id: 8,
@@ -62,6 +69,7 @@ export const fakeUsers = [
     lastName: 'Mueller',
     birthDate: '1964-08-24',
     department: 'Services',
+    gender: 'male',
   },
   {
     id: 9,
@@ -70,6 +78,7 @@ export const fakeUsers = [
     lastName: 'Corkery',
     birthDate: '1971-03-11',
     department: 'Human Resources',
+    gender: 'female',
   },
   {
     id: 10,
@@ -78,6 +87,7 @@ export const fakeUsers = [
     lastName: 'Price',
     birthDate: '1958-08-11',
     department: 'Marketing',
+    gender: 'male',
   },
   {
     id: 11,
@@ -86,6 +96,7 @@ export const fakeUsers = [
     lastName: 'Jones',
     birthDate: '1961-09-12',
     department: 'Business Development',
+    gender: 'female',
   },
   {
     id: 12,
@@ -94,6 +105,7 @@ export const fakeUsers = [
     lastName: 'Rath',
     birthDate: '1990-12-14',
     department: 'Product Management',
+    gender: 'male',
   },
   {
     id: 13,
@@ -102,6 +114,7 @@ export const fakeUsers = [
     lastName: 'Douglas',
     birthDate: '1967-07-23',
     department: 'Research and Development',
+    gender: 'female',
   },
   {
     id: 14,
@@ -110,6 +123,7 @@ export const fakeUsers = [
     lastName: 'Lynch',
     birthDate: '1979-08-25',
     department: 'Sales',
+    gender: 'male',
   },
   {
     id: 15,
@@ -118,6 +132,7 @@ export const fakeUsers = [
     lastName: 'Halvorson',
     birthDate: '1996-02-02',
     department: 'Marketing',
+    gender: 'male',
   },
   {
     id: 16,
@@ -126,6 +141,7 @@ export const fakeUsers = [
     lastName: 'Fadel',
     birthDate: '1963-07-03',
     department: 'Research and Development',
+    gender: 'male',
   },
   {
     id: 17,
@@ -134,6 +150,7 @@ export const fakeUsers = [
     lastName: 'Prohaska',
     birthDate: '1975-10-20',
     department: 'Sales',
+    gender: 'male',
   },
   {
     id: 18,
@@ -142,6 +159,7 @@ export const fakeUsers = [
     lastName: 'Skiles',
     birthDate: '1958-02-05',
     department: 'Support',
+    gender: 'male',
   },
   {
     id: 19,
@@ -150,6 +168,7 @@ export const fakeUsers = [
     lastName: 'Purdy',
     birthDate: '1989-10-15',
     department: 'Sales',
+    gender: 'female',
   },
   {
     id: 20,
@@ -158,6 +177,7 @@ export const fakeUsers = [
     lastName: 'Renner',
     birthDate: '1980-01-19',
     department: 'Support',
+    gender: 'male',
   },
   {
     id: 21,
@@ -166,6 +186,7 @@ export const fakeUsers = [
     lastName: 'Ernser',
     birthDate: '1983-01-22',
     department: 'Product Management',
+    gender: 'female',
   },
   {
     id: 22,
@@ -174,6 +195,7 @@ export const fakeUsers = [
     lastName: 'Weber',
     birthDate: '1987-11-11',
     department: 'Research and Development',
+    gender: 'male',
   },
   {
     id: 23,
@@ -182,6 +204,7 @@ export const fakeUsers = [
     lastName: "O'Reilly",
     birthDate: '1967-10-05',
     department: 'Legal',
+    gender: 'male',
   },
   {
     id: 24,
@@ -190,6 +213,7 @@ export const fakeUsers = [
     lastName: 'Schuster',
     birthDate: '1966-06-02',
     department: 'Product Management',
+    gender: 'male',
   },
   {
     id: 25,
@@ -198,6 +222,7 @@ export const fakeUsers = [
     lastName: 'Ernser',
     birthDate: '2000-09-28',
     department: 'Marketing',
+    gender: 'male',
   },
   {
     id: 26,
@@ -206,6 +231,7 @@ export const fakeUsers = [
     lastName: 'Braun',
     birthDate: '1965-09-06',
     department: 'Engineering',
+    gender: 'female',
   },
   {
     id: 27,
@@ -214,6 +240,7 @@ export const fakeUsers = [
     lastName: 'Schowalter',
     birthDate: '1983-06-07',
     department: 'Human Resources',
+    gender: 'male',
   },
   {
     id: 28,
@@ -222,6 +249,7 @@ export const fakeUsers = [
     lastName: 'Terry',
     birthDate: '1979-01-09',
     department: 'Support',
+    gender: 'male',
   },
   {
     id: 29,
@@ -230,6 +258,7 @@ export const fakeUsers = [
     lastName: 'Greenfelder',
     birthDate: '1976-09-07',
     department: 'Product Management',
+    gender: 'female',
   },
   {
     id: 30,
@@ -238,6 +267,7 @@ export const fakeUsers = [
     lastName: 'Stracke',
     birthDate: '1964-12-18',
     department: 'Support',
+    gender: 'female',
   },
 ];
 
@@ -248,4 +278,5 @@ export interface User {
   lastName: string;
   birthDate: string;
   department: string;
+  gender: string;
 }
