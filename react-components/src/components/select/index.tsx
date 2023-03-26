@@ -5,14 +5,10 @@ interface Props {
   children?: React.ReactNode;
 }
 
-export default function Select(props: Props) {
-  return (
-    <select className="input-select">
-      {/* <option disabled selected>
-        {' '}
-        -- select an option --{' '}
-      </option> */}
-      {props.children}
-    </select>
-  );
-}
+const Select = React.forwardRef((props: Props, ref: React.Ref<HTMLSelectElement>) => (
+  <select ref={ref} className="input-select">
+    {props.children}
+  </select>
+));
+
+export default Select;

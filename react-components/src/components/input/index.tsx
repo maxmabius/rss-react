@@ -5,6 +5,8 @@ interface Props {
   type?: 'text' | 'date' | 'checkbox';
 }
 
-export default function Input({ type = 'text' }: Props) {
-  return <input type={type} />;
-}
+const Input = React.forwardRef((props: Props, ref: React.Ref<HTMLInputElement>) => (
+  <input ref={ref} type={props.type} />
+));
+
+export default Input;
