@@ -10,6 +10,7 @@ export default function PageHeader() {
         <nav>
           <ul className="menu">
             <MenuItem name="Main" to="/" />
+            <MenuItem name="Create" to="/create" />
             <MenuItem name="About" to="/about" />
           </ul>
         </nav>
