@@ -7,8 +7,11 @@
 }
 
 .create-list {
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: space-between;
 }
 
 .create-button {
@@ -18,4 +21,13 @@
   cursor: pointer;
   color: var(--colorPrimaryLight);
   background-color: var(--bgSecondary);
+}
+
+.create-button:hover {
+  background-color: var(--bgSecondaryDark);
+}
+
+.create-button:disabled,
+.create-button[disabled] {
+  background-color: var(--bgPrimary);
 }

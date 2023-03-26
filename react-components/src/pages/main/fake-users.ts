@@ -273,9 +273,9 @@ export const fakeUsers = [
 
 export interface User {
   id: number;
-  image: string;
+  image?: string;
   firstName: string;
-  lastName: string;
+  lastName?: string;
   birthDate: string;
   department: string;
   gender: string;
