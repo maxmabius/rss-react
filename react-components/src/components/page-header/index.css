@@ -1,0 +1,9 @@
+.page-header {
+  background: var(--bgPrimary);
+  padding: 20px;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+}
