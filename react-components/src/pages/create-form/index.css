@@ -1,4 +1,21 @@
+.create-form {
+  border: 1px solid var(--bgPrimaryLight);
+  border-radius: 5px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
 .create-list {
   display: flex;
   flex-wrap: wrap;
+}
+
+.create-button {
+  margin-top: 10px;
+  padding: 5px;
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: var(--colorPrimaryLight);
+  background-color: var(--bgSecondary);
 }

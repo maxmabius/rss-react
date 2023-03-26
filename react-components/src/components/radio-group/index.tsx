@@ -7,24 +7,20 @@ interface TypeOption {
 }
 
 interface Props {
-  legend: string;
   radioGroupOptions: Array<TypeOption>;
 }
 
-export default function RadioGroup({ legend, radioGroupOptions }: Props) {
+export default function RadioGroup({ radioGroupOptions }: Props) {
   return (
-    <fieldset>
-      <legend>{legend}</legend>
-      <React.Fragment>
-        {radioGroupOptions.map((option) => {
-          return (
-            <span key={option.value}>
-              <input value={option.value} name={option.name} type="radio" />
-              <label htmlFor={option.value}>{option.value}</label>
-            </span>
-          );
-        })}
-      </React.Fragment>
-    </fieldset>
+    <React.Fragment>
+      {radioGroupOptions.map((option) => {
+        return (
+          <span key={option.value}>
+            <input className="input-radio" value={option.value} name={option.name} type="radio" />
+            <label htmlFor={option.value}>{option.value}</label>
+          </span>
+        );
+      })}
+    </React.Fragment>
   );
 }

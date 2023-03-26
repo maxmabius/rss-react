@@ -2,15 +2,9 @@ import React from 'react';
 import './index.css';
 
 interface Props {
-  label: string;
-  type?: 'text' | 'date' | 'checkbox' | 'checkbox';
+  type?: 'text' | 'date' | 'checkbox';
 }
 
-export default function Input({ label, type = 'text' }: Props) {
-  return (
-    <div>
-      <div>{label}</div>
-      <input type={type} />
-    </div>
-  );
+export default function Input({ type = 'text' }: Props) {
+  return <input type={type} />;
 }

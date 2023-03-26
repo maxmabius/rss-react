@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import Field from '../../components/field';
 import Select from '../../components/select';
 import Input from '../../components/input';
 import RadioGroup from '../../components/radio-group';
@@ -54,6 +55,7 @@ export default class CreateForm extends React.Component<Props, State> {
       ...this.state,
       isSubmitting: true,
     });
+    console.log('state', this.state);
   }
 
   render() {
@@ -69,17 +71,39 @@ export default class CreateForm extends React.Component<Props, State> {
     ];
     return (
       <div>
-        <form className="create__form" onSubmit={this.handleSubmit}>
-          <Input label="name" />
-          <Input label="birthday" type="date" />
-          <Select label="Department">
-            <option value="marketing">Marketing</option>
-            <option value="support">Support</option>
-            <option value="services">Services</option>
-          </Select>
-          <Input label="I consent to my personal data" type="checkbox" />
-          <RadioGroup radioGroupOptions={radioGroupOptions} legend="Select a gender:" />
-          <File label="image" />
+        <form className="create-form" onSubmit={this.handleSubmit}>
+          <Field label="Name">
+            <Input />
+          </Field>
+
+          <Field label="Birthday">
+            <Input type="date" />
+          </Field>
+
+          <Field label="Department">
+            <Select>
+              <option value="">--Choose an option--</option>
+              <option value="marketing">Marketing</option>
+              <option value="support">Support</option>
+              <option value="services">Services</option>
+            </Select>
+          </Field>
+
+          <Field label="I consent to my personal data" position="left">
+            <Input type="checkbox" />
+          </Field>
+
+          <Field label="Select a gender">
+            <RadioGroup radioGroupOptions={radioGroupOptions} />
+          </Field>
+
+          <Field label="Upload image">
+            <File />
+          </Field>
+
+          <button className="create-button" onClick={() => this.handleSubmit}>
+            Create
+          </button>
         </form>
         <div className="create-list">
           {testUsers.map((user) => (
