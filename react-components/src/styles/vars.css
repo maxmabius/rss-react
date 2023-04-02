@@ -1,0 +1,25 @@
+:root {
+  /* COLORS */
+  --bgPrimary: #303030;
+  --bgPrimaryDark: #222222;
+  --bgPrimaryLight: #808080;
+
+  --bgSecondary: #009a76;
+  --bgSecondaryDark: #005e45;
+  --bgSecondaryLight: #00bc8c;
+
+  --colorPrimary: #fcf9f1;
+  --colorPrimaryDark: #808080;
+
+  --bgError: #d62c1a;
+  --bgSuccess: #00bc8c;
+
+  /* LAYOUT */
+  --widthLayoutDesktop: 1920px; /* 1160px */
+  --widthLayoutLaptop: 1024px; /* 960px */
+  --widthLayoutTablet: 768px; /* 600px */
+  --widthLayoutMobile: 320px; /* 300px */
+
+  /* INDENT */
+  --widthIndent: 1.25rem;
+}
