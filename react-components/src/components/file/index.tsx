@@ -1,12 +1,13 @@
 import * as React from 'react';
+import type { UseFormRegister } from 'react-hook-form/dist/types';
+import type { FormValues } from '../../pages/create-form/index';
 import './index.css';
 
 interface Props {
-  children?: React.ReactNode;
+  name: keyof FormValues;
+  register: UseFormRegister<FormValues>;
 }
 
-const File = React.forwardRef((props: Props, ref: React.Ref<HTMLInputElement>) => (
-  <input ref={ref} type="file" />
-));
-
-export default File;
+export default function File({ name, register }: Props) {
+  return <input type="file" {...register(name)} />;
+}

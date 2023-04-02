@@ -1,14 +1,18 @@
 import * as React from 'react';
+import type { UseFormRegister } from 'react-hook-form/dist/types';
+import type { FormValues } from '../../pages/create-form/index';
 import './index.css';
 
 interface Props {
   children?: React.ReactNode;
+  name: keyof FormValues;
+  register: UseFormRegister<FormValues>;
 }
 
-const Select = React.forwardRef((props: Props, ref: React.Ref<HTMLSelectElement>) => (
-  <select ref={ref} className="input-select">
-    {props.children}
-  </select>
-));
-
-export default Select;
+export default function Select({ children, name, register }: Props) {
+  return (
+    <select className="input-select" {...register(name)}>
+      {children}
+    </select>
+  );
+}

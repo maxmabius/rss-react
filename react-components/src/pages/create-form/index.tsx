@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { v4 } from 'uuid';
+import { useForm, SubmitHandler } from 'react-hook-form';
 
 import Field from '../../components/field';
 import Select from '../../components/select';
@@ -7,190 +9,122 @@ import RadioGroup from '../../components/radio-group';
 import File from '../../components/file';
 import Card from '../../components/card';
 
-import { v4 } from 'uuid';
+import { errorResolver } from './error-resolver';
 import type { User } from '../main/fake-users';
 
 import './index.css';
 
-interface Props {
-  children?: React.ReactNode;
-}
-
-interface Errors {
+export interface FormValues {
   firstName?: string;
   birthDate?: string;
   department?: string;
   confirmation?: string;
   gender?: string;
-  image?: string;
+  image?: FileList;
 }
 
-interface State {
-  isSubmitting: boolean;
-  errors: Errors;
-  users: User[];
-}
+export type FormErrors = {
+  [PropertyKey in keyof FormValues]: {
+    type: string;
+    message: string;
+  };
+};
 
-interface Elements {
-  form: React.RefObject<HTMLFormElement>;
-  firstName: React.RefObject<HTMLInputElement>;
-  birthDate: React.RefObject<HTMLInputElement>;
-  department: React.RefObject<HTMLSelectElement>;
-  confirmation: React.RefObject<HTMLInputElement>;
-  gender: React.RefObject<HTMLInputElement>[];
-  image: React.RefObject<HTMLInputElement>;
-}
+export default function CreateForm() {
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [users, setUsers] = React.useState<User[] | []>([]);
 
-export default class CreateForm extends React.Component<Props, State> {
-  elements: Elements;
-  constructor(props: Props) {
-    super(props);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    resolver: errorResolver,
+    shouldFocusError: false,
+  });
 
-    this.state = {
-      errors: {},
-      isSubmitting: false,
-      users: [],
-    };
-
-    this.elements = {
-      form: React.createRef<HTMLFormElement>(),
-      firstName: React.createRef<HTMLInputElement>(),
-      birthDate: React.createRef<HTMLInputElement>(),
-      department: React.createRef<HTMLSelectElement>(),
-      confirmation: React.createRef<HTMLInputElement>(),
-      gender: [React.createRef<HTMLInputElement>(), React.createRef<HTMLInputElement>()],
-      image: React.createRef<HTMLInputElement>(),
-    };
-
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.validate = this.validate.bind(this);
-  }
-
-  validate() {
-    const errors: Errors = {};
-    const files = this.elements.image.current?.files;
+  const validate = (data: FormValues) => {
+    const files = data.image;
     const file = files ? files[0] : null;
     const image = file ? URL.createObjectURL(file) : '';
+
     const user = {
       id: v4(),
-      firstName: this.elements.firstName.current?.value,
-      birthDate: this.elements.birthDate.current?.value,
-      department: this.elements.department.current?.value,
-      gender: this.elements.gender.find((option) => option.current?.checked)?.current?.value,
+      firstName: data.firstName,
+      birthDate: data.birthDate,
+      department: data.department,
+      gender: data.gender,
       image: image,
-      confirmation: this.elements.confirmation.current?.checked,
+      confirmation: data.confirmation,
     };
 
-    Object.keys(user).map((field) => {
-      if (!user[field]) {
-        errors[field] = 'Required';
-      }
-    });
-
-    const firstName = this.elements.firstName.current?.value;
-    if (firstName && firstName[0] === firstName[0].toLowerCase()) {
-      errors.firstName = 'Should starts with uppercased letter';
-    }
-
-    if (Object.keys(errors).length) {
-      this.setState({
-        errors,
-      });
-
-      return;
-    }
-
     return user;
-  }
+  };
 
-  handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const user = this.validate();
-    if (!user) return;
-
-    this.setState({
-      isSubmitting: true,
-    });
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    const user = validate(data);
+    setIsSubmitting(true);
 
     setTimeout(() => {
-      this.reset();
-      this.setState({
-        users: [user, ...this.state.users],
-      });
+      setUsers([user, ...users]);
+      setIsSubmitting(false);
+      reset();
     }, 1000);
-  }
+  };
 
-  reset() {
-    this.elements.form.current?.reset();
+  const radioGroupOptions = [
+    {
+      name: 'gender',
+      value: 'male',
+    },
+    {
+      name: 'gender',
+      value: 'female',
+    },
+  ];
 
-    this.setState({
-      isSubmitting: false,
-    });
-  }
+  return (
+    <React.Fragment>
+      <form className="create-form" onSubmit={handleSubmit(onSubmit)}>
+        <Field label="Name" error={errors.firstName}>
+          <Input name="firstName" register={register} />
+        </Field>
 
-  render() {
-    const radioGroupOptions = [
-      {
-        name: 'gender',
-        value: 'male',
-        ref: this.elements.gender[0],
-      },
-      {
-        name: 'gender',
-        value: 'female',
-        ref: this.elements.gender[1],
-      },
-    ];
-    return (
-      <React.Fragment>
-        <form className="create-form" onSubmit={this.handleSubmit} ref={this.elements.form}>
-          <Field label="Name" error={this.state.errors.firstName}>
-            <Input ref={this.elements.firstName} />
-          </Field>
+        <Field label="Birthday" error={errors.birthDate}>
+          <Input type="date" name="birthDate" register={register} />
+        </Field>
 
-          <Field label="Birthday" error={this.state.errors.birthDate}>
-            <Input ref={this.elements.birthDate} type="date" />
-          </Field>
+        <Field label="Department" error={errors.department}>
+          <Select name="department" register={register}>
+            <option value="">--Choose an option--</option>
+            <option value="Marketing">Marketing</option>
+            <option value="Support">Support</option>
+            <option value="Services">Services</option>
+          </Select>
+        </Field>
 
-          <Field label="Department" error={this.state.errors.department}>
-            <Select ref={this.elements.department}>
-              <option value="">--Choose an option--</option>
-              <option value="Marketing">Marketing</option>
-              <option value="Support">Support</option>
-              <option value="Services">Services</option>
-            </Select>
-          </Field>
+        <Field label="Select a gender" error={errors.gender}>
+          <RadioGroup radioGroupOptions={radioGroupOptions} name="gender" register={register} />
+        </Field>
 
-          <Field label="Select a gender" error={this.state.errors.gender}>
-            <RadioGroup radioGroupOptions={radioGroupOptions} />
-          </Field>
+        <Field label="Upload image" error={errors.image}>
+          <File name="image" register={register} />
+        </Field>
 
-          <Field label="Upload image" error={this.state.errors.image}>
-            <File ref={this.elements.image} />
-          </Field>
+        <Field label="I consent to my personal data" position="left" error={errors.confirmation}>
+          <Input type="checkbox" name="confirmation" register={register} />
+        </Field>
 
-          <Field
-            label="I consent to my personal data"
-            position="left"
-            error={this.state.errors.confirmation}
-          >
-            <Input ref={this.elements.confirmation} type="checkbox" />
-          </Field>
-
-          <button
-            disabled={this.state.isSubmitting}
-            className="create-button"
-            onClick={() => this.handleSubmit}
-          >
-            {this.state.isSubmitting ? 'Wait...' : 'Create'}
-          </button>
-        </form>
-        <div className="create-list">
-          {this.state.users.map((user) => (
-            <Card key={user.id} user={user} />
-          ))}
-        </div>
-      </React.Fragment>
-    );
-  }
+        <button disabled={isSubmitting} className="create-button">
+          {isSubmitting ? 'Wait...' : 'Create'}
+        </button>
+      </form>
+      <div className="create-list">
+        {users?.map((user) => (
+          <Card key={user.id} user={user} />
+        ))}
+      </div>
+    </React.Fragment>
+  );
 }

@@ -1,25 +1,36 @@
 import React from 'react';
+import type { FieldError } from 'react-hook-form/dist/types';
 import './index.css';
 
 interface Props {
   label: string;
-  error?: string;
+  error?: FieldError | undefined;
   position?: 'top' | 'left';
   children?: React.ReactNode;
 }
 
-export default function Field({ label, error = '', children, position = 'top' }: Props) {
+interface Props2 {
+  error?: FieldError | undefined;
+}
+
+function ErrorMessage({ error }: Props2) {
+  return <>{error?.message && <div className="field-error">{error?.message}</div>}</>;
+}
+
+export default function Field({ label, error, children, position = 'top' }: Props) {
   if (position === 'left') {
     return (
-      <>
+      <React.Fragment>
         <span className="field-box">
           <div className="field-box__left">
             {children}
             <div className="field-label">{label}</div>
           </div>
-          <div>{error && <div className="field-error">{error}</div>}</div>
+          <div>
+            <ErrorMessage error={error} />
+          </div>
         </span>
-      </>
+      </React.Fragment>
     );
   }
 
@@ -27,7 +38,7 @@ export default function Field({ label, error = '', children, position = 'top' }:
     <div className="field-box">
       <div className="field-label">{label}</div>
       {children}
-      {error && <div className="field-error">{error}</div>}
+      <ErrorMessage error={error} />
     </div>
   );
 }

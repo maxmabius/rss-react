@@ -272,11 +272,11 @@ export const fakeUsers = [
 ];
 
 export interface User {
-  id: number;
-  image?: string;
-  firstName: string;
+  id?: number;
+  image?: string | FileList;
+  firstName?: string;
   lastName?: string;
-  birthDate: string;
-  department: string;
-  gender: string;
+  birthDate?: string;
+  department?: string;
+  gender?: string;
 }
