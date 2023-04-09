@@ -70,6 +70,7 @@ export default function CreateForm() {
       setUsers([user, ...users]);
       setIsSubmitting(false);
       reset();
+      alert('The data has been saved...');
     }, 1000);
   };
 
