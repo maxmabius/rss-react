@@ -16,18 +16,4 @@
 
 .create-button {
   margin-top: 10px;
-  padding: 5px;
-  font-size: 1.3rem;
-  cursor: pointer;
-  color: var(--colorPrimaryLight);
-  background-color: var(--bgSecondary);
-}
-
-.create-button:hover {
-  background-color: var(--bgSecondaryDark);
-}
-
-.create-button:disabled,
-.create-button[disabled] {
-  background-color: var(--bgPrimary);
 }

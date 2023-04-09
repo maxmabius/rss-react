@@ -4,12 +4,12 @@ import { useLoaderData, Await, useNavigation, Form } from 'react-router-dom';
 import Card from '../../components/card';
 import Spinner from '../../components/spinner';
 
-import type { user } from '../..//types';
+import type { User } from '../../types';
 
 import './index.css';
 
 export default function Main() {
-  const { users } = useLoaderData() as { users: (typeof user)[] };
+  const { users } = useLoaderData() as { users: User[] };
   const { state: navigation } = useNavigation();
 
   const [searchValue, search] = React.useState(localStorage.getItem('searchValue') || '');
@@ -49,15 +49,15 @@ export default function Main() {
           onChange={handleSearch}
           value={searchValue}
         />
-        <button type="submit" className="search-button" disabled={isSearching}>
+        <button type="submit" disabled={isSearching}>
           {isSearching ? 'searching' : 'search'}
         </button>
       </Form>
 
       <div className="list">
         <React.Suspense fallback={<Spinner />}>
-          <Await resolve={users}>
-            {(data: (typeof user)[]) => {
+          <Await resolve={users} errorElement={<div>Could not load users from api...</div>}>
+            {(data: User[]) => {
               if (data.length === 0) {
                 return <div>The robots could not be found...</div>;
               }

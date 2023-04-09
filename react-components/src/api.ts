@@ -1,4 +1,4 @@
-import type { user } from './types';
+import type { User } from './types';
 import { type LoaderFunction, defer } from 'react-router-dom';
 
 const DUMMY_API_URL = 'https://dummyjson.com';
@@ -8,14 +8,14 @@ const fetchUsers = async (data: string | null) => {
   const params = data ? `/search?q=${data}&${defaultLimit}` : `?${defaultLimit}`;
   const response = await fetch(`${DUMMY_API_URL}/users${params}`);
 
-  const { users } = (await response.json()) as { users: (typeof user)[] };
+  const { users } = (await response.json()) as { users: User[] };
 
   return users.map(({ id, image, firstName, birthDate, company, gender }) => ({
     id,
     image,
     firstName,
     birthDate,
-    department: company.department,
+    company,
     gender,
   }));
 };
@@ -26,17 +26,10 @@ export const usersLoader: LoaderFunction = async ({ request }) => {
   return defer({ users: fetchUsers(search) });
 };
 
-export const fetchUser = async ({ id }) => {
+export const fetchUser = async ({ id }: { id: number }) => {
   const response = await fetch(`${DUMMY_API_URL}/users/${id}`);
 
-  const { users } = (await response.json()) as { users: (typeof user)[] };
+  const user = (await response.json()) as User;
 
-  return users.map(({ id, image, firstName, birthDate, company, gender }) => ({
-    id,
-    image,
-    firstName,
-    birthDate,
-    department: company.department,
-    gender,
-  }));
+  return user;
 };

@@ -24,6 +24,21 @@ button {
   border: none;
 }
 
+button {
+  color: var(--colorPrimary);
+  font-size: 1rem;
+  cursor: pointer;
+  margin-left: 15px;
+  border-radius: 5px;
+  background: var(--bgSecondary);
+  width: 5rem;
+  height: 1.5rem;
+}
+
+button:disabled {
+  background: var(--bgSecondaryLight);
+}
+
 a {
   color: inherit;
   text-decoration: none;

@@ -10,7 +10,7 @@ import File from '../../components/file';
 import Card from '../../components/card';
 
 import { errorResolver } from './error-resolver';
-import type { User } from '../main/fake-users';
+import type { User } from '../../types';
 
 import './index.css';
 
@@ -30,7 +30,7 @@ export type FormErrors = {
   };
 };
 
-export default function CreateForm(): React {
+export default function CreateForm() {
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [users, setUsers] = React.useState<User[] | []>([]);
 
@@ -53,7 +53,9 @@ export default function CreateForm(): React {
       id: v4(),
       firstName: data.firstName,
       birthDate: data.birthDate,
-      department: data.department,
+      company: {
+        department: data.department,
+      },
       gender: data.gender,
       image: image,
       confirmation: data.confirmation,
