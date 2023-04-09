@@ -1,27 +1,22 @@
 import * as React from 'react';
+import { useLoaderData, Await, useNavigation, Form } from 'react-router-dom';
 
 import Card from '../../components/card';
+import Spinner from '../../components/spinner';
 
-import type { User } from '../../pages/main/fake-users';
+import type { user } from '../..//types';
 
 import './index.css';
 
-const uploadUsers = async () => {
-  return (await import('../../pages/main/fake-users')).fakeUsers as User[];
-};
-
 export default function Main() {
+  const { users } = useLoaderData() as { users: (typeof user)[] };
+  const { state: navigation } = useNavigation();
+
   const [searchValue, search] = React.useState(localStorage.getItem('searchValue') || '');
-  const [users, setUsers] = React.useState<User[] | []>([]);
   const searchValueRef: React.MutableRefObject<string> = React.useRef<string>('');
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     search(event.target.value);
-  };
-
-  const getUsers = async () => {
-    const users = await uploadUsers();
-    setUsers(users);
   };
 
   React.useEffect(() => {
@@ -35,35 +30,48 @@ export default function Main() {
 
   React.useEffect(() => {
     searchValueRef.current = searchValue;
-    const loadUsers = async () => {
-      await getUsers();
-    };
-
-    loadUsers();
   }, [searchValue]);
 
   const save = () => {
     localStorage.setItem('searchValue', searchValueRef.current);
   };
 
-  const filteredFakeUsers = users.filter((user) =>
-    user.firstName?.toLocaleLowerCase().includes(searchValue.toLowerCase())
-  );
+  const isSearching = navigation === 'loading';
 
   return (
     <div className="main-page">
-      <div>{searchValue}</div>
-      <input
-        type="text"
-        className="input"
-        placeholder="Filter by first name..."
-        onChange={handleSearch}
-        value={searchValue}
-      />
+      <Form className="search-form">
+        <input
+          type="search"
+          name="search"
+          className="input"
+          placeholder="Search by first and last name..."
+          onChange={handleSearch}
+          value={searchValue}
+        />
+        <button type="submit" className="search-button" disabled={isSearching}>
+          {isSearching ? 'searching' : 'search'}
+        </button>
+      </Form>
+
       <div className="list">
-        {filteredFakeUsers?.map((user) => (
-          <Card key={user.id} user={user} />
-        ))}
+        <React.Suspense fallback={<Spinner />}>
+          <Await resolve={users}>
+            {(data: (typeof user)[]) => {
+              if (data.length === 0) {
+                return <div>The robots could not be found...</div>;
+              }
+
+              return (
+                <React.Fragment>
+                  {data.map((user) => (
+                    <Card key={user.id} user={user} />
+                  ))}
+                </React.Fragment>
+              );
+            }}
+          </Await>
+        </React.Suspense>
       </div>
     </div>
   );

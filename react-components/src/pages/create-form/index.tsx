@@ -30,7 +30,7 @@ export type FormErrors = {
   };
 };
 
-export default function CreateForm() {
+export default function CreateForm(): React {
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [users, setUsers] = React.useState<User[] | []>([]);
 
@@ -70,8 +70,9 @@ export default function CreateForm() {
       setUsers([user, ...users]);
       setIsSubmitting(false);
       reset();
-      alert('The data has been saved...');
     }, 1000);
+
+    setTimeout(() => alert('The data has been added to your list'), 1500);
   };
 
   const radioGroupOptions = [

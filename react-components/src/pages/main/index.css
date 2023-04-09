@@ -5,6 +5,14 @@
 .list {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .input {
@@ -15,4 +23,19 @@
   padding: 10px;
   height: 40px;
   width: 100%;
+}
+
+.search-button {
+  color: var(--colorPrimary);
+  font-size: 1rem;
+  cursor: pointer;
+  margin-left: 15px;
+  border-radius: 5px;
+  background: var(--bgSecondary);
+  width: 5rem;
+  height: 2.5rem;
+}
+
+.search-button:disabled {
+  background: var(--bgSecondaryLight);
 }
