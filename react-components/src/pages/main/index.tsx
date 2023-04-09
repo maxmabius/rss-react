@@ -13,6 +13,7 @@ const uploadUsers = async () => {
 export default function Main() {
   const [searchValue, search] = React.useState(localStorage.getItem('searchValue') || '');
   const [users, setUsers] = React.useState<User[] | []>([]);
+  const searchValueRef: React.MutableRefObject<string> = React.useRef<string>('');
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     search(event.target.value);
@@ -24,7 +25,16 @@ export default function Main() {
   };
 
   React.useEffect(() => {
-    localStorage.setItem('searchValue', searchValue);
+    window.addEventListener('beforeunload', save);
+
+    return () => {
+      window.removeEventListener('beforeunload', save);
+      save();
+    };
+  }, []);
+
+  React.useEffect(() => {
+    searchValueRef.current = searchValue;
     const loadUsers = async () => {
       await getUsers();
     };
@@ -32,12 +42,17 @@ export default function Main() {
     loadUsers();
   }, [searchValue]);
 
+  const save = () => {
+    localStorage.setItem('searchValue', searchValueRef.current);
+  };
+
   const filteredFakeUsers = users.filter((user) =>
-    user.firstName.toLocaleLowerCase().includes(searchValue.toLowerCase())
+    user.firstName?.toLocaleLowerCase().includes(searchValue.toLowerCase())
   );
 
   return (
     <div className="main-page">
+      <div>{searchValue}</div>
       <input
         type="text"
         className="input"
