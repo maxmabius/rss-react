@@ -1,0 +1,30 @@
+.field-box {
+  font-size: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px;
+  border: 1px solid var(--bgPrimaryLight);
+  background-color: var(--bgPrimary);
+}
+
+.field-box:not(:first-child) {
+  margin-top: 12px;
+}
+
+.field-box__left {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  justify-content: start;
+}
+
+.field-label {
+  padding-bottom: 10px;
+}
+
+.field-error {
+  font-size: 1rem;
+  margin-top: 5px;
+  color: var(--bgError);
+}

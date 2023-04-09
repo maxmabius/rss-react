@@ -1,0 +1,19 @@
+.create-form {
+  border: 1px solid var(--bgPrimaryLight);
+  border-radius: 5px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.create-list {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: space-between;
+}
+
+.create-button {
+  margin-top: 10px;
+}
