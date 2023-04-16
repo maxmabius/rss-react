@@ -2,29 +2,14 @@ import * as React from 'react';
 import ModalClose from '@mui/joy/ModalClose';
 import Spinner from '../spinner';
 
-import { fetchUser } from '../../api';
-
-import type { User } from '../../types';
+import { usersApi } from '../../store/users';
 
 import './index.css';
 
 export default function CardInfo({ userId }: { userId: number }) {
-  const [user, setUser] = React.useState<User | null>(null);
-  const [isLoading, setIsLoading] = React.useState(false);
-  React.useEffect(() => {
-    const loadCard = async () => {
-      setIsLoading(true);
+  const { data: user, isFetching } = usersApi.useGetUserQuery(userId);
 
-      const user = await fetchUser({ id: userId });
-
-      setUser(user);
-      setIsLoading(false);
-    };
-
-    loadCard();
-  }, [userId]);
-
-  if (isLoading) {
+  if (isFetching) {
     return <Spinner />;
   }
 

@@ -2,13 +2,6 @@
   width: 100%;
 }
 
-.list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-}
-
 .search-form {
   display: flex;
   justify-content: center;
