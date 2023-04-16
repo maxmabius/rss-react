@@ -131,7 +131,17 @@ export type FormUser = {
   firstName: string;
   birthDate: string;
   department: string;
-  gender: 'male' | 'female';
+  gender: string;
   image: string;
   confirmation: boolean;
 };
+
+const infoUser = {
+  userId: 1,
+  address: '629 Debbie Drive',
+  city: 'Nashville',
+  postalCode: '37076',
+  state: 'TN',
+};
+
+export type InfoUser = typeof infoUser;

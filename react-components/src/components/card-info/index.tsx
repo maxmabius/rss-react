@@ -7,10 +7,14 @@ import { usersApi } from '../../store/users';
 import './index.css';
 
 export default function CardInfo({ userId }: { userId: number }) {
-  const { data: user, isFetching } = usersApi.useGetUserQuery(userId);
+  const { data: user, isFetching, error } = usersApi.useGetUserQuery(userId);
 
   if (isFetching) {
     return <Spinner />;
+  }
+
+  if (error) {
+    return <div>api error</div>;
   }
 
   const noData = 'No data';

@@ -73,7 +73,10 @@ export default function CreateForm() {
           <Input
             register={register('firstName', {
               required: 'required',
-              pattern: { value: /^[A-Z].*/, message: 'should starts with uppercased letter' },
+              pattern: {
+                value: /^\p{Lu}\p{L}*$/u,
+                message: 'should starts with uppercased letter',
+              },
             })}
           />
         </Field>

@@ -1,17 +1,50 @@
-import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
-import { describe, it } from 'vitest';
-import { testUser } from '../../types';
+import { type Mock, expect, describe, it, vi, afterEach } from 'vitest';
+import { screen, render } from '@testing-library/react';
+import { usersApi } from '../../store/users';
+import type { InfoUser } from '../../types';
 import CardInfo from '.';
 
-describe('CardInfo', async () => {
-  it('renders CardInfo elements for user 1', async () => {
-    render(<CardInfo userId={testUser.id} />);
-    await waitFor(() => {
-      expect(screen.getByText(testUser.company.address.address)).toBeInTheDocument();
-      expect(screen.getByText(testUser.company.address.city)).toBeInTheDocument();
-      expect(screen.getByText(testUser.company.address.postalCode)).toBeInTheDocument();
-      expect(screen.getByText(testUser.company.address.state)).toBeInTheDocument();
+vi.mock('../../store/users');
+
+const info: InfoUser = {
+  userId: 1,
+  address: '629 Debbie Drive',
+  city: 'Nashville',
+  postalCode: '37076',
+  state: 'TN',
+};
+
+describe('test UsersDetails component', () => {
+  afterEach(() => {
+    expect(usersApi.useGetUserQuery).toHaveBeenCalled();
+  });
+
+  it('show the spinner when fetching data', () => {
+    (usersApi.useGetUserQuery as Mock).mockReturnValue({ isFetching: true });
+
+    render(<CardInfo {...info} />);
+    expect(screen.getByRole('spinner')).toBeInTheDocument();
+  });
+
+  it('show the error when error fetching data', () => {
+    (usersApi.useGetUserQuery as Mock).mockReturnValue({
+      error: { status: 404, data: { message: 'Not found' } },
     });
+
+    render(<CardInfo {...info} />);
+    expect(screen.getByText('api error')).toBeInTheDocument();
+  });
+
+  it('show the info when fetched successfully', () => {
+    (usersApi.useGetUserQuery as Mock).mockReturnValue({
+      data: {
+        company: {
+          address: info,
+        },
+      },
+    });
+
+    render(<CardInfo {...info} />);
+    expect(screen.getByText(info.address)).toBeInTheDocument();
   });
 });
