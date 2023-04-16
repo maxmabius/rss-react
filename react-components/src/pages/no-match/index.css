@@ -1,0 +1,12 @@
+.no-match {
+  text-align: center;
+  padding-top: 50px;
+}
+
+.to-main {
+  color: var(--bgSecondary);
+}
+
+.to-main:hover {
+  color: var(--bgSecondaryLight);
+}
