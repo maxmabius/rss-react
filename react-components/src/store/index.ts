@@ -5,11 +5,13 @@ import type { TypedUseSelectorHook } from 'react-redux';
 
 import { api } from './api';
 import { searchUsersSlice } from './search-users';
+import { formUsersSlice } from './form-users';
 
 export const store = configureStore({
   reducer: {
     [api.reducerPath]: api.reducer,
     searchUsers: searchUsersSlice.reducer,
+    formUsers: formUsersSlice.reducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(api.middleware),
 });

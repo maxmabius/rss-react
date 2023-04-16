@@ -9,8 +9,10 @@ import RadioGroup from '../../components/radio-group';
 import File from '../../components/file';
 import Card from '../../components/card';
 
-import { errorResolver } from './error-resolver';
-import type { User } from '../../types';
+import type { FormUser } from '../../types';
+
+import { useAppSelector, useAppDispatch } from '../../store';
+import { formUsersSlice } from '../../store/form-users';
 
 import './index.css';
 
@@ -23,58 +25,34 @@ export interface FormValues {
   image?: FileList;
 }
 
-export type FormErrors = {
-  [PropertyKey in keyof FormValues]: {
-    type: string;
-    message: string;
-  };
-};
-
 export default function CreateForm() {
-  const [isSubmitting, setIsSubmitting] = React.useState(false);
-  const [users, setUsers] = React.useState<User[] | []>([]);
+  const users = useAppSelector((state) => state.formUsers.users);
+  const dispatch = useAppDispatch();
 
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
-  } = useForm({
-    resolver: errorResolver,
-    shouldFocusError: false,
-  });
+    formState: { errors, isSubmitSuccessful, isSubmitting },
+  } = useForm<FormUser>({});
 
-  const validate = (data: FormValues) => {
-    const files = data.image;
-    const file = files ? files[0] : null;
-    const image = file ? URL.createObjectURL(file) : '';
+  React.useEffect(() => {
+    if (isSubmitSuccessful) {
+      reset();
+      setTimeout(() => alert('The data has been added to your list'), 500);
+    }
+  }, [isSubmitSuccessful, reset]);
 
-    const user = {
+  const onSubmit: SubmitHandler<FormUser> = (data) => {
+    const newUser = {
       id: v4(),
-      firstName: data.firstName,
-      birthDate: data.birthDate,
+      ...data,
+      image: URL.createObjectURL(data.image[0] as unknown as Blob),
       company: {
         department: data.department,
       },
-      gender: data.gender,
-      image: image,
-      confirmation: data.confirmation,
     };
-
-    return user;
-  };
-
-  const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    const user = validate(data);
-    setIsSubmitting(true);
-
-    setTimeout(() => {
-      setUsers([user, ...users]);
-      setIsSubmitting(false);
-      reset();
-    }, 1000);
-
-    setTimeout(() => alert('The data has been added to your list'), 1500);
+    dispatch(formUsersSlice.actions.addUser(newUser));
   };
 
   const radioGroupOptions = [
@@ -92,15 +70,25 @@ export default function CreateForm() {
     <React.Fragment>
       <form className="create-form" onSubmit={handleSubmit(onSubmit)}>
         <Field label="Name" error={errors.firstName}>
-          <Input name="firstName" register={register} />
+          <Input
+            register={register('firstName', {
+              required: 'required',
+              pattern: { value: /^[A-Z].*/, message: 'should starts with uppercased letter' },
+            })}
+          />
         </Field>
 
         <Field label="Birthday" error={errors.birthDate}>
-          <Input type="date" name="birthDate" register={register} />
+          <Input
+            type="date"
+            register={register('birthDate', {
+              required: 'required',
+            })}
+          />
         </Field>
 
         <Field label="Department" error={errors.department}>
-          <Select name="department" register={register}>
+          <Select register={register('department', { required: 'required' })}>
             <option value="">--Choose an option--</option>
             <option value="Marketing">Marketing</option>
             <option value="Support">Support</option>
@@ -109,15 +97,18 @@ export default function CreateForm() {
         </Field>
 
         <Field label="Select a gender" error={errors.gender}>
-          <RadioGroup radioGroupOptions={radioGroupOptions} name="gender" register={register} />
+          <RadioGroup
+            radioGroupOptions={radioGroupOptions}
+            register={register('gender', { required: 'required' })}
+          />
         </Field>
 
         <Field label="Upload image" error={errors.image}>
-          <File name="image" register={register} />
+          <File register={register('image', { required: 'required' })} />
         </Field>
 
         <Field label="I consent to my personal data" position="left" error={errors.confirmation}>
-          <Input type="checkbox" name="confirmation" register={register} />
+          <Input type="checkbox" register={register('confirmation', { required: 'required' })} />
         </Field>
 
         <button disabled={isSubmitting} className="create-button">

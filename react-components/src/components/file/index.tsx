@@ -1,13 +1,12 @@
 import * as React from 'react';
-import type { UseFormRegister } from 'react-hook-form/dist/types';
+import type { UseFormRegisterReturn } from 'react-hook-form/dist/types';
 import type { FormValues } from '../../pages/create-form/index';
 import './index.css';
 
 interface Props {
-  name: keyof FormValues;
-  register: UseFormRegister<FormValues>;
+  register: UseFormRegisterReturn<keyof FormValues>;
 }
 
-export default function File({ name, register }: Props) {
-  return <input type="file" {...register(name)} />;
+export default function File({ register }: Props) {
+  return <input type="file" {...register} />;
 }

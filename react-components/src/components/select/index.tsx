@@ -1,17 +1,16 @@
 import * as React from 'react';
-import type { UseFormRegister } from 'react-hook-form/dist/types';
+import type { UseFormRegisterReturn } from 'react-hook-form/dist/types';
 import type { FormValues } from '../../pages/create-form/index';
 import './index.css';
 
 interface Props {
   children?: React.ReactNode;
-  name: keyof FormValues;
-  register: UseFormRegister<FormValues>;
+  register: UseFormRegisterReturn<keyof FormValues>;
 }
 
-export default function Select({ children, name, register }: Props) {
+export default function Select({ children, register }: Props) {
   return (
-    <select className="input-select" {...register(name)}>
+    <select className="input-select" {...register}>
       {children}
     </select>
   );

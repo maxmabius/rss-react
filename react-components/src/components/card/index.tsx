@@ -3,11 +3,11 @@ import Modal from '@mui/joy/Modal';
 
 import CardInfo from '../card-info';
 
-import type { User } from '../../types';
+import type { User, FormUser } from '../../types';
 
 import './index.css';
 
-export default function Card({ user }: { user: User }) {
+export default function Card({ user }: { user: User | FormUser }) {
   const [open, setOpen] = React.useState<boolean>(false);
 
   return (

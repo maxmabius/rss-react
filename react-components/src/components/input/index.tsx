@@ -1,22 +1,21 @@
 import React from 'react';
-import type { UseFormRegister } from 'react-hook-form/dist/types';
+import type { UseFormRegisterReturn } from 'react-hook-form/dist/types';
 import type { FormValues } from '../../pages/create-form/index';
 import './index.css';
 
 import type { FieldError } from 'react-hook-form/dist/types';
 
 interface Props {
-  name: keyof FormValues;
   type?: 'text' | 'date' | 'checkbox';
-  register: UseFormRegister<FormValues>;
+  register: UseFormRegisterReturn<keyof FormValues>;
   error?: FieldError | undefined;
 }
 
-export default function Input({ type = 'text', name, register, error }: Props) {
+export default function Input({ type = 'text', register, error }: Props) {
   return (
     <div>
       {error?.message}
-      <input type={type} {...register(name)} />
+      <input type={type} {...register} />
     </div>
   );
 }

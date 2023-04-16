@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { UseFormRegister } from 'react-hook-form/dist/types';
+import type { UseFormRegisterReturn } from 'react-hook-form/dist/types';
 import type { FormValues } from '../../pages/create-form/index';
 import './index.css';
 
@@ -10,18 +10,17 @@ interface TypeOption {
 
 interface Props {
   radioGroupOptions: Array<TypeOption>;
-  name: keyof FormValues;
-  register: UseFormRegister<FormValues>;
+  register: UseFormRegisterReturn<keyof FormValues>;
 }
 
-export default function RadioGroup({ radioGroupOptions, name, register }: Props) {
+export default function RadioGroup({ radioGroupOptions, register }: Props) {
   return (
     <React.Fragment>
       {radioGroupOptions.map((option) => {
         return (
           <span key={option.value}>
             <input
-              {...register(name)}
+              {...register}
               className="input-radio"
               value={option.value}
               name={option.name}

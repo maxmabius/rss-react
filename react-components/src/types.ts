@@ -125,3 +125,13 @@ export const testUser2 = {
 };
 
 export type User = typeof testUser;
+
+export type FormUser = {
+  id?: number;
+  firstName: string;
+  birthDate: string;
+  department: string;
+  gender: 'male' | 'female';
+  image: string;
+  confirmation: boolean;
+};
